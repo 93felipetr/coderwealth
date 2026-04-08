@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Oficial
 
 on:
   push:
@@ -14,13 +14,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout seu repositorio
+      - name: Baixar codigo
         uses: actions/checkout@v4
-      - name: Instalar, compilar e enviar o site
-        uses: withastro/action@v3
+        
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-          package-manager: npm
+          node-version: '20'
+
+      - name: Limpeza Agressiva no Servidor (Remove caches e permissoes do Windows)
+        run: rm -rf node_modules package-lock.json
+
+      - name: Instalar Dependencias (Linux Nativo)
+        run: npm install
+
+      - name: Compilar Site Estatico
+        run: npm run build
+
+      - name: Upload para o GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
 
   deploy:
     needs: build
@@ -29,6 +43,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy para o GitHub Pages
+      - name: Publicar Site
         id: deployment
         uses: actions/deploy-pages@v4
