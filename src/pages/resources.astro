@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AffiliateCard from '../components/AffiliateCard.astro';
+
+// Affiliate resources data - in production, this could come from a CMS or database
+const affiliateResources = [
+  {
+    title: 'Ledger Nano X',
+    description: 'Hardware wallet premium com Bluetooth para gerenciamento seguro de criptomoedas. Suporte para 5500+ ativos digitais.',
+    affiliateUrl: 'https://www.ledger.com/products/ledger-nano-x?utm_source=coderwealth',
+    category: 'finance' as const,
+    features: [
+      'Bluetooth integrado',
+      'Suporte para 5500+ criptos',
+      'Aplicativo mobile Ledger Live',
+      'Certificação de segurança CC EAL5+'
+    ]
+  },
+  {
+    title: 'Ledger Nano S Plus',
+    description: 'Versão acessível do hardware wallet mais seguro do mercado. Perfeito para iniciantes em cripto.',
+    affiliateUrl: 'https://www.ledger.com/products/ledger-nano-s-plus?utm_source=coderwealth',
+    category: 'finance' as const,
+    features: [
+      'Preço acessível',
+      '5500+ criptos suportadas',
+      'Tela OLED de 128x64',
+      'Backup seguro com seed phrase'
+    ]
+  },
+  {
+    title: 'Mullvad VPN',
+    description: 'VPN independente focada em privacidade. Sem logs, aceita criptomoedas e tem servidores em 40+ países.',
+    affiliateUrl: 'https://mullvad.net/en/?ref=coderwealth',
+    category: 'security' as const,
+    features: [
+      'Sem coleta de logs',
+      'Aceita Bitcoin/Monero',
+      'WireGuard protocol',
+      '40+ países, 700+ servidores'
+    ]
+  },
+  {
+    title: 'ProtonVPN',
+    description: 'VPN suíça com foco em privacidade. Gratuita limitada ou paga ilimitada. Open source e audited.',
+    affiliateUrl: 'https://protonvpn.com/?ref=coderwealth',
+    category: 'security' as const,
+    features: [
+      'Servidores na Suíça',
+      'Open source auditado',
+      'Kill switch automático',
+      'Suporte P2P/Torrent'
+    ]
+  },
+  {
+    title: 'Binance',
+    description: 'Maior exchange de criptomoedas do mundo. Taxas baixas, alta liquidez e suporte para 600+ altcoins.',
+    affiliateUrl: 'https://www.binance.com/en/register?ref=coderwealth',
+    category: 'finance' as const,
+    features: [
+      '600+ criptomoedas',
+      'Taxas de trading baixas',
+      'Staking e DeFi',
+      'Suporte 24/7 em português'
+    ]
+  },
+  {
+    title: 'Kraken',
+    description: 'Exchange regulada nos EUA com foco em segurança. Suporte para staking e futures de cripto.',
+    affiliateUrl: 'https://www.kraken.com/?ref=coderwealth',
+    category: 'finance' as const,
+    features: [
+      'Regulada pela SEC',
+      'Suporte para 200+ altcoins',
+      'Staking rewards',
+      'Futures e derivativos'
+    ]
+  },
+  {
+    title: 'Zapier',
+    description: 'Plataforma de automação que conecta 5000+ apps. Crie workflows automatizados sem código.',
+    affiliateUrl: 'https://zapier.com/?ref=coderwealth',
+    category: 'offgrid' as const,
+    features: [
+      '5000+ integrações',
+      'Interface no-code',
+      'Automação multi-step',
+      'Templates prontos'
+    ]
+  },
+  {
+    title: 'Make (Integromat)',
+    description: 'Plataforma avançada de automação visual. Ideal para workflows complexos e integrações API.',
+    affiliateUrl: 'https://www.make.com/en/register?ref=coderwealth',
+    category: 'offgrid' as const,
+    features: [
+      'Automação visual',
+      'Suporte avançado a APIs',
+      'Cenários complexos',
+      'Execução ilimitada no plano pago'
+    ]
+  },
+  {
+    title: 'Bitwarden',
+    description: 'Gerenciador de senhas open source. Gratuito para uso pessoal, criptografia AES-256.',
+    affiliateUrl: 'https://bitwarden.com/?ref=coderwealth',
+    category: 'security' as const,
+    features: [
+      'Open source',
+      'Criptografia AES-256',
+      'Gratuito para pessoal',
+      'Sincronização cross-device'
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title="Recommended Resources - CoderWealth"
+  description="Tools and services recommended for digital security, process automation and cryptocurrency investments. Carefully selected affiliate links."
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <h1 class="text-4xl sm:text-5xl font-bold text-white mb-6">
+        Recommended <span class="text-primary-400">Resources</span>
+      </h1>
+      <p class="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
+        Tools and services carefully selected for professionals working
+        at the intersection of technology and finance. All links are affiliate and help
+        keep the content free.
+      </p>
+      <div class="mt-6 inline-flex items-center px-4 py-2 bg-primary-900/50 border border-primary-500/30 rounded-lg">
+        <svg class="w-5 h-5 text-primary-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+        </svg>
+        <span class="text-sm text-primary-200">
+          Affiliate links - Full transparency
+        </span>
+      </div>
+    </div>
+    </div>
+
+    <!-- Resources Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+      {affiliateResources.map(resource => (
+        <AffiliateCard
+          title={resource.title}
+          description={resource.description}
+          affiliateUrl={resource.affiliateUrl}
+          category={resource.category}
+          features={resource.features}
+        />
+      ))}
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8">
+      <div class="flex items-start space-x-4">
+        <div class="flex-shrink-0">
+          <svg class="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-2">Important Notice</h3>
+          <div class="text-gray-300 space-y-3">
+            <p>
+              <strong>Affiliate Links:</strong> The links on this page are affiliate.
+              When you make purchases through them, you help keep the content free
+              and quality at CoderWealth.
+            </p>
+            <p>
+              <strong>Technical Recommendations:</strong> All recommendations are based
+              on technical analysis and practical experience. This is not financial advice.
+            </p>
+            <p>
+              <strong>Due Diligence:</strong> Always do your own research before
+              investing in cryptocurrencies or using any financial tools.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="text-center mt-16">
+      <div class="bg-gradient-to-r from-primary-900 to-primary-800 rounded-3xl p-12">
+        <h2 class="text-3xl font-bold text-white mb-4">
+          Precisa de Recomendações Personalizadas?
+        </h2>
+        <p class="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+          Conteúdo técnico premium sobre segurança, automação e finanças.
+          Artigos exclusivos toda semana no seu e-mail.
+        </p>
+        <a
+          href="/"
+          class="inline-flex items-center px-8 py-4 bg-accent-500 hover:bg-accent-400 text-black font-semibold rounded-lg transition-all duration-200 transform hover:scale-105"
+        >
+          <span>Inscrever-se na Newsletter</span>
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

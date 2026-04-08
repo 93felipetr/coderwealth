@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadCaptureForm from '../components/LeadCaptureForm.astro';
+import PostGrid from '../components/PostGrid.astro';
+import { getRecentPosts, getPostsByCategory, getCategoryInfo } from '../utils/content-utils';
+
+// Get recent posts for the home page
+const recentPosts = await getRecentPosts(6);
+
+// Get posts by category for category overview
+const securityPosts = await getPostsByCategory('security');
+const offgridPosts = await getPostsByCategory('offgrid');
+const financePosts = await getPostsByCategory('finance');
+---
+
+<BaseLayout
+  title="CoderWealth - Security, Offgrid & Finance"
+  description="Premium technical content about cybersecurity, offgrid living, and finance/cryptocurrencies. Practical articles for technology professionals."
+>
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-primary-900/20">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-20">
+      <svg class="w-full h-full" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" fill-rule="evenodd">
+          <g fill="#9C92AC" fill-opacity="0.05">
+            <circle cx="30" cy="30" r="1"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="space-y-8">
+        <!-- Main Heading -->
+        <div class="space-y-4">
+          <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight">
+            <span class="block">Technology</span>
+            <span class="block bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">
+              that Transforms
+            </span>
+          </h1>
+          <p class="text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Premium technical content about
+            <span class="text-red-400 font-semibold">security</span>,
+            <span class="text-amber-400 font-semibold">offgrid living</span> and
+            <span class="text-green-400 font-semibold">finance</span>
+          </p>
+        </div>
+
+        <!-- Lead Capture Form -->
+        <div class="max-w-md mx-auto">
+          <LeadCaptureForm className="shadow-2xl" />
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="pt-8">
+          <div class="animate-bounce">
+            <svg class="w-6 h-6 mx-auto text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Overview -->
+  <section class="py-20 bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+          Explore by Category
+        </h2>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+          Dive deep into specific topics at the intersection of technology and finance
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+        <!-- Segurança -->
+        <div class="group relative bg-gradient-to-br from-red-900/20 to-red-800/20 backdrop-blur-sm border border-red-500/20 rounded-2xl p-8 hover:border-red-400/40 transition-all duration-300">
+          <div class="absolute inset-0 bg-red-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="w-16 h-16 bg-red-500/20 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-4">Security</h3>
+              <p class="text-gray-300 mb-6 leading-relaxed">
+                {getCategoryInfo('security').description}
+              </p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-red-400 font-medium">
+                {securityPosts.length} articles
+              </span>
+              <a
+                href="/articles/security"
+                class="inline-flex items-center text-red-400 hover:text-red-300 font-medium transition-colors"
+              >
+                Explore
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offgrid & DIY -->
+        <div class="group relative bg-gradient-to-br from-amber-900/20 to-amber-800/20 backdrop-blur-sm border border-amber-500/20 rounded-2xl p-8 hover:border-amber-400/40 transition-all duration-300">
+          <div class="absolute inset-0 bg-amber-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="w-16 h-16 bg-amber-500/20 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-4">Offgrid & DIY</h3>
+              <p class="text-gray-300 mb-6 leading-relaxed">
+                {getCategoryInfo('offgrid').description}
+              </p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-amber-400 font-medium">
+                {offgridPosts.length} articles
+              </span>
+              <a
+                href="/articles/offgrid"
+                class="inline-flex items-center text-amber-400 hover:text-amber-300 font-medium transition-colors"
+              >
+                Explore
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Finance -->
+        <div class="group relative bg-gradient-to-br from-green-900/20 to-green-800/20 backdrop-blur-sm border border-green-500/20 rounded-2xl p-8 hover:border-green-400/40 transition-all duration-300">
+          <div class="absolute inset-0 bg-green-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative">
+            <div class="w-16 h-16 bg-green-500/20 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-4">Finance</h3>
+              <p class="text-gray-300 mb-6 leading-relaxed">
+                {getCategoryInfo('finance').description}
+              </p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-green-400 font-medium">
+                {financePosts.length} articles
+              </span>
+              <a
+                href="/articles/finance"
+                class="inline-flex items-center text-green-400 hover:text-green-300 font-medium transition-colors"
+              >
+                Explore
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Posts -->
+      <PostGrid
+        posts={recentPosts}
+        title="Recent Articles"
+        maxItems={6}
+        className="mb-16"
+      />
+
+      <!-- Newsletter CTA -->
+      <div class="text-center bg-gradient-to-r from-primary-900 to-primary-800 rounded-3xl p-12">
+        <h2 class="text-3xl font-bold text-white mb-4">
+          Don't Miss Any Content
+        </h2>
+        <p class="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+          Be the first to know about new articles, tools and opportunities at the intersection of technology and finance.
+        </p>
+        <a
+          href="/"
+          class="inline-flex items-center px-8 py-4 bg-accent-500 hover:bg-accent-400 text-black font-semibold rounded-lg transition-all duration-200 transform hover:scale-105"
+        >
+          Subscribe to Newsletter
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+          </svg>
+        </a>
+      </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

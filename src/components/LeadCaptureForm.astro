@@ -1,0 +1,172 @@
+---
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  placeholder?: string;
+  className?: string;
+}
+
+const {
+  title = "Get Premium Content",
+  subtitle = "Technical articles about cybersecurity, automation and finance every week in your inbox.",
+  buttonText = "Subscribe Now",
+  placeholder = "Your best email...",
+  className = ""
+} = Astro.props;
+---
+
+<div class={`bg-gradient-to-r from-primary-900 to-primary-800 rounded-2xl p-8 shadow-2xl ${className}`}>
+  <div class="text-center mb-6">
+    <h3 class="text-2xl font-bold text-white mb-2">{title}</h3>
+    <p class="text-primary-100 text-lg">{subtitle}</p>
+  </div>
+
+  <!--
+    REQUIRED CONFIGURATION: Replace YOUR_FORM_ID with your actual Formspree form ID
+    1. Go to https://formspree.io and create an account
+    2. Create a new form
+    3. Copy the provided endpoint (formspree.io/f/XXXXXXX)
+    4. Replace YOUR_FORM_ID with the actual code
+  -->
+  <form
+    id="lead-capture-form"
+    class="space-y-4"
+    method="POST"
+    action="https://formspree.io/f/YOUR_FORM_ID"
+    name="lead-capture"
+  >
+    <div class="relative">
+      <input
+        type="email"
+        name="email"
+        id="email"
+        required
+        placeholder={placeholder}
+        class="w-full px-4 py-3 bg-white/10 border border-primary-600 rounded-lg text-white placeholder-primary-200 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent backdrop-blur-sm transition-all duration-200"
+      />
+      <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+        <svg class="w-5 h-5 text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+        </svg>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="w-full bg-accent-500 hover:bg-accent-400 text-black font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-primary-900 shadow-lg hover:shadow-xl"
+    >
+      <span class="flex items-center justify-center space-x-2">
+        <span>{buttonText}</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+        </svg>
+      </span>
+    </button>
+
+    <p class="text-xs text-primary-200 text-center">
+      ✅ No spam • 🔒 Privacy guaranteed • 📧 Unsubscribe anytime
+    </p>
+  </form>
+
+  <!-- Success Message (hidden by default) -->
+  <div id="success-message" class="hidden mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+    <div class="flex items-center">
+      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+      </svg>
+      <span class="font-medium">Subscription successful!</span>
+    </div>
+    <p class="text-sm mt-1">Check your email to confirm your subscription.</p>
+  </div>
+
+  <!-- Error Message (hidden by default) -->
+  <div id="error-message" class="hidden mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+    <div class="flex items-center">
+      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+      </svg>
+      <span class="font-medium">Error processing subscription</span>
+    </div>
+    <p class="text-sm mt-1">Try again later or contact us.</p>
+  </div>
+</div>
+
+<script>
+  // Form handling for static site with Formspree integration
+  const form = document.getElementById('lead-capture-form') as HTMLFormElement;
+  const successMessage = document.getElementById('success-message');
+  const errorMessage = document.getElementById('error-message');
+  const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = (form.email as HTMLInputElement).value;
+      const originalButtonText = submitButton?.textContent || 'Quero Receber';
+
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showError('Please enter a valid email.');
+        return;
+      }
+
+      // Show loading state
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Enviando...';
+      }
+
+      try {
+        const formData = new FormData(form);
+
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          showSuccess();
+          form.reset();
+        } else {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || 'Error processing subscription');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        showError('Error processing subscription. Try again later.');
+      } finally {
+        // Reset button state
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalButtonText;
+        }
+      }
+    });
+  }
+
+  function showSuccess() {
+    if (successMessage && errorMessage) {
+      successMessage.classList.remove('hidden');
+      errorMessage.classList.add('hidden');
+      // Auto-hide success message after 5 seconds
+      setTimeout(() => {
+        successMessage.classList.add('hidden');
+      }, 5000);
+    }
+  }
+
+  function showError(message: string) {
+    if (errorMessage && successMessage) {
+      errorMessage.classList.remove('hidden');
+      successMessage.classList.add('hidden');
+      const errorText = errorMessage.querySelector('p');
+      if (errorText) errorText.textContent = message;
+    }
+  }
+</script>
