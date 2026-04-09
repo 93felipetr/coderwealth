@@ -14,6 +14,7 @@ const {
 } = Astro.props;
 
 const currentYear = new Date().getFullYear();
+const SITE_VERSION = 'v1.0002';
 ---
 
 <!doctype html>
@@ -169,7 +170,7 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-        <p>&copy; {currentYear} CoderWealth. All rights reserved.</p>
+        <p>&copy; {currentYear} CoderWealth. All rights reserved. {SITE_VERSION}</p>
       </div>
     </div>
   </footer>
