@@ -40,24 +40,43 @@ const categoryColors = {
     </div>
   )}
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {displayPosts.map(post => {
-      const formattedDate = post.data.pubDate.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      });
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {displayPosts.map(post => {
+          const formattedDate = post.data.pubDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          });
 
-      return (
-        <article class="group bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden hover:border-primary-500 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-          <!-- Category Badge -->
-          {showCategory && (
-            <div class="px-4 py-2">
-              <span class={`inline-flex items-center px-2 py-1 rounded text-xs font-medium text-white ${categoryColors[post.data.category]}`}>
-                {categoryLabels[post.data.category]}
-              </span>
-            </div>
-          )}
+          const categoryColorMap = {
+            security: 'from-red-900/30 to-red-800/20',
+            offgrid: 'from-amber-900/30 to-amber-800/20',
+            finance: 'from-green-900/30 to-green-800/20'
+          };
+
+          return (
+            <article class="group bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden hover:border-primary-500 transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+              {/* Thumbnail */}
+              {post.data.image && (
+                <a href={`/articles/${post.slug}`} class="block">
+                  <div class="h-48 overflow-hidden">
+                    <img 
+                      src={post.data.image} 
+                      alt={post.data.title}
+                      class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                </a>
+              )}
+
+              {/* Category Badge */}
+              {showCategory && (
+                <div class="px-4 py-2">
+                  <span class={`inline-flex items-center px-2 py-1 rounded text-xs font-medium text-white ${categoryColors[post.data.category]}`}>
+                    {categoryLabels[post.data.category]}
+                  </span>
+                </div>
+              )}
 
           <!-- Content -->
           <div class="p-6">
